@@ -1,0 +1,22 @@
+services:
+  app:
+    container_name: python_app
+    build: ./
+    depends_on:
+      - db
+    volumes:
+      - ./app:/src/app
+    ports:
+      - 8001:8000
+
+  db:
+    container_name: postgres
+    image: postgres
+    environment:
+      - POSTGRES_DB=database
+      - POSTGRES_USER=${POSTGRES_DB_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_DB_PASSWORD}
+    ports:
+      - 5432:5432
+    volumes:
+      - .postgres:/var/lib/postgres/data
